@@ -1,5 +1,5 @@
 import { formatIpfsUrl, formatPrice, getDesc, ipfs2http } from "../util";
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, FiCheck, FiX } from "react-icons/fi";
 import { NextSeo } from "next-seo";
 import { getNFT, getNFTInfo } from "../util/requests";
 import { useRouter } from "next/router";
@@ -67,7 +67,7 @@ function NFT({ nft, title }) {
         >
           <div className="justify-center p-4 shadow-xl rounded-md bg-white">
             <h3 className="text-3xl font-semibold mb-4">{nft?.name}</h3>
-            <div className="relative rounded-md bg-black w-full">
+            <div className="relative rounded-md bg-black w-full border">
               <img className="rounded-md" src={img_url} />
               <span
                 className="absolute top-5 right-5
@@ -75,7 +75,22 @@ function NFT({ nft, title }) {
               >
                 #{nft.rarity_rank + 1}
               </span>
+              <div
+                style={{ top: "50%", width: "42rem" }}
+                className="absolute -left-20 rounded-md bg-transparent w-48 justify-center"
+              >
+                <div className="bg-white">
+                  <button className="rounded-full p-4 text-2xl text-white shadow-inner  bg-red-400 hover:bg-red-500 float-left font-bold">
+                    {" "}
+                    <FiX />{" "}
+                  </button>
+                  <button className="rounded-full p-4 text-2xl text-white shadow-inner  bg-green-400 hover:bg-green-500 float-right font-bold">
+                    <FiCheck />{" "}
+                  </button>
+                </div>
+              </div>
             </div>
+
             <div className="py-4 px-2 w-full rounded-md text-lg mt-4 bg-red-100 text-red-500">
               ♦️ {nft.rarity_score.toFixed(2)}
             </div>
