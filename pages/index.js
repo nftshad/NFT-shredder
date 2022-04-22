@@ -18,6 +18,7 @@ function Home({ title, img, description, nfts, pages, filters }) {
   const router = useRouter();
   const ref = createRef(null);
   const [showMenu, setShowMenu] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const { all_traits, attr_count } = filters;
   const { nfts: nftJSON } = useAppContext();
 
@@ -64,13 +65,14 @@ function Home({ title, img, description, nfts, pages, filters }) {
           {showMenu}
           <div className="max-w-5xl flex justify-end mt-4">
             <button
-              className="flex justify-center items-center text-sm text-white bg-blue-200 hover:bg-blue-400 p-4 rounded-md"
+              className="flex justify-center items-center text-sm text-white bg-blue-400 hover:bg-blue-500 p-4 rounded-md shadow-xl hover:shadow-none"
               onClick={() => {
-                downloadNFTJSON(nftJSON);
+                setIsDownloading(true);
+                downloadNFTJSON(nftJSON, setIsDownloading);
               }}
             >
               <FiDownload className="inline mr-1" />
-              <span>Download</span>
+              <span>{isDownloading ? "Downloading..." : "Download"}</span>
             </button>
           </div>
           <TraitFilters />
