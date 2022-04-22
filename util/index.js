@@ -91,5 +91,3 @@ export const downloadNFTJSON = async (nfts) => {
     });
   });
 };
-
-const downloadImage = async (image_url) => {};
