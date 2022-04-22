@@ -75,20 +75,6 @@ function NFT({ nft, title }) {
               >
                 #{nft.rarity_rank + 1}
               </span>
-              <div
-                style={{ top: "50%", width: "42rem" }}
-                className="absolute -left-20 rounded-md bg-transparent w-48 justify-center"
-              >
-                <div className="bg-white">
-                  <button className="rounded-full p-4 text-2xl text-white shadow-inner  bg-red-400 hover:bg-red-500 float-left font-bold">
-                    {" "}
-                    <FiX />{" "}
-                  </button>
-                  <button className="rounded-full p-4 text-2xl text-white shadow-inner  bg-green-400 hover:bg-green-500 float-right font-bold">
-                    <FiCheck />{" "}
-                  </button>
-                </div>
-              </div>
             </div>
 
             <div className="py-4 px-2 w-full rounded-md text-lg mt-4 bg-red-100 text-red-500">
