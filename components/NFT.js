@@ -34,7 +34,7 @@ export const NFT = (nft) => {
           className="text-sm bg-red-300 hover:bg-red-400 py-2 w-full text-white rounded-md"
           onClick={() => {
             rejectNFT(nft.id);
-            setIsRejected(true);
+            setIsRejected(!isRejected);
           }}
         >
           {isRejected ? "Rejected" : "Reject"}

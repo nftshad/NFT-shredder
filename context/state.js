@@ -6,7 +6,7 @@ const nfts = require("../data/collection.json");
 nfts.map((nft) => (nft["isRejected"] = false));
 
 const rejectNFT = (id) => {
-  nfts[id]["isRejected"] = true;
+  nfts[id]["isRejected"] = !nfts[id]["isRejected"];
 };
 
 export function AppWrapper({ children }) {

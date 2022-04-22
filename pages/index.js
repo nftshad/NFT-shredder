@@ -10,12 +10,15 @@ import { TraitFilters } from "../components/TraitFilters";
 import { Footer } from "../components/Footer";
 import { config } from "../config";
 import { getFilters, getNFTs } from "../util/requests";
+import { useAppContext } from "../context/state";
+import { downloadNFTJSON } from "../util";
 
 function Home({ title, img, description, nfts, pages, filters }) {
   const router = useRouter();
   const ref = createRef(null);
   const [showMenu, setShowMenu] = useState(false);
   const { all_traits, attr_count } = filters;
+  const { nfts: nftJSON } = useAppContext();
 
   return (
     <div
@@ -58,6 +61,16 @@ function Home({ title, img, description, nfts, pages, filters }) {
         />
         <div className="flex flex-col w-full w-5xl px-4">
           {showMenu}
+          <div className="max-w-5xl text-right mt-4">
+            <button
+              className="text-sm bg-blue-200 hover:bg-blue-400 p-4 rounded-md"
+              onClick={() => {
+                downloadNFTJSON(nftJSON);
+              }}
+            >
+              Download
+            </button>
+          </div>
           <TraitFilters />
           <div className="flex flex-wrap justify-between sm:justify-start max-w-5xl w-full">
             {nfts.map(

@@ -60,3 +60,18 @@ export const formatPrice = (price) => {
   if (price !== "-") return (price / 10 ** 18).toFixed(2);
   else return "-";
 };
+
+// for download button on index.js
+export const downloadNFTJSON = async (nfts) => {
+  const fileName = "nfts";
+  const unrejectedNFTs = nfts.filter((nft) => nft.isRejected === false);
+  const json = JSON.stringify(unrejectedNFTs);
+  const blob = new Blob([json], { type: "application/json" });
+  const href = await URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = href;
+  link.download = fileName + ".json";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
