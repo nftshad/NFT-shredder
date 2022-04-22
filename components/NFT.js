@@ -41,19 +41,21 @@ export const NFT = (nft) => {
         cursor-pointer rounded-md shadow-xs
         mr-3 mb-3 sm:mr-4 text-center"
       >
-        <img
-          src={formatIpfsUrl(nft.image)}
-          className="rounded-md h-auto bg-black"
-        />
-        <a
-          className="rounded-b-md px-1 hover:underline"
-          onClick={() => setShowModal(true)}
-          // href={`/${config.STARTING_INDEX == 1 ? nft.id + 1 : nft.id}`}
-        >
-          <h3 className="text-xs text-gray-600">
-            #{config.STARTING_INDEX == 1 ? nft.id + 1 : nft.id}
-          </h3>
-        </a>
+        <div onClick={() => setShowModal(true)}>
+          <img
+            src={formatIpfsUrl(nft.image)}
+            className="rounded-md h-auto bg-black"
+          />
+          <a
+            className="rounded-b-md mt-1 hover:underline"
+            // href={`/${config.STARTING_INDEX == 1 ? nft.id + 1 : nft.id}`}
+          >
+            <h3 className="text-xs text-gray-600 mt-1 mb-1">
+              #{config.STARTING_INDEX == 1 ? nft.id + 1 : nft.id}
+            </h3>
+          </a>
+        </div>
+
         <button
           className="text-sm bg-red-300 hover:bg-red-400 py-2 w-full text-white rounded-md"
           onClick={() => {
@@ -85,9 +87,18 @@ export const NFT = (nft) => {
               >
                 #{nft.rarity_rank + 1}
               </span>
-              <div className="py-4 px-2 w-full rounded-md text-lg text-center mt-4 bg-red-100 text-red-500">
+              <div className="py-4 px-2 w-full rounded-md text-lg text-center mt-4 bg-yellow-100 text-yellow-500">
                 ♦️ {nft.rarity_score.toFixed(2)}
               </div>
+              <button
+                className="text-lg bg-red-500 hover:bg-red-400 py-4 mt-4 w-full text-white rounded-md"
+                onClick={() => {
+                  rejectNFT(nft.id);
+                  setIsRejected(!isRejected);
+                }}
+              >
+                {isRejected ? "Rejected" : "Reject"}
+              </button>
             </div>
             {/* left */}
             <div className="w-7/12">
