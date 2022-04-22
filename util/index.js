@@ -1,4 +1,6 @@
+import JSZip from "jszip";
 import { config } from "../config";
+import { saveAs } from "file-saver";
 
 let basePath =
   config.env == "local"
@@ -63,15 +65,31 @@ export const formatPrice = (price) => {
 
 // for download button on index.js
 export const downloadNFTJSON = async (nfts) => {
-  const fileName = "nfts";
   const unrejectedNFTs = nfts.filter((nft) => nft.isRejected === false);
-  const json = JSON.stringify(unrejectedNFTs);
+  const json = JSON.stringify(unrejectedNFTs, null, 2);
   const blob = new Blob([json], { type: "application/json" });
   const href = await URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = href;
-  link.download = fileName + ".json";
+  link.download = "collection.json";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+
+  const images = unrejectedNFTs.map((nft) => nft.image);
+  const zip = new JSZip();
+  const imageszip = zip.folder("images");
+  const promises = images.map(async (image, id) => {
+    const url = new URL(`${basePath}/${image}`);
+    const img = await fetch(url);
+    const blob = await img.blob();
+    imageszip.file(`${id}.png`, blob, { base64: true });
+  });
+  Promise.all(promises).then(() => {
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      saveAs(content, "images.zip");
+    });
+  });
 };
+
+const downloadImage = async (image_url) => {};

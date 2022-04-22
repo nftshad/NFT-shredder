@@ -12,6 +12,7 @@ import { config } from "../config";
 import { getFilters, getNFTs } from "../util/requests";
 import { useAppContext } from "../context/state";
 import { downloadNFTJSON } from "../util";
+import { FiDownload } from "react-icons/fi";
 
 function Home({ title, img, description, nfts, pages, filters }) {
   const router = useRouter();
@@ -63,12 +64,12 @@ function Home({ title, img, description, nfts, pages, filters }) {
           {showMenu}
           <div className="max-w-5xl text-right mt-4">
             <button
-              className="text-sm bg-blue-200 hover:bg-blue-400 p-4 rounded-md"
+              className="inline text-sm text-white bg-blue-200 hover:bg-blue-400 p-4 rounded-md"
               onClick={() => {
                 downloadNFTJSON(nftJSON);
               }}
             >
-              Download
+              <FiDownload /> Download
             </button>
           </div>
           <TraitFilters />
