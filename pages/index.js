@@ -62,14 +62,15 @@ function Home({ title, img, description, nfts, pages, filters }) {
         />
         <div className="flex flex-col w-full w-5xl px-4">
           {showMenu}
-          <div className="max-w-5xl text-right mt-4">
+          <div className="max-w-5xl flex justify-end mt-4">
             <button
-              className="inline text-sm text-white bg-blue-200 hover:bg-blue-400 p-4 rounded-md"
+              className="flex justify-center items-center text-sm text-white bg-blue-200 hover:bg-blue-400 p-4 rounded-md"
               onClick={() => {
                 downloadNFTJSON(nftJSON);
               }}
             >
-              <FiDownload /> Download
+              <FiDownload className="inline mr-1" />
+              <span>Download</span>
             </button>
           </div>
           <TraitFilters />
