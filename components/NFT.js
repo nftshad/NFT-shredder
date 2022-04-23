@@ -57,7 +57,9 @@ export const NFT = (nft) => {
         </div>
 
         <button
-          className="text-sm bg-red-300 hover:bg-red-400 py-2 w-full text-white rounded-md"
+          className={`text-sm  ${
+            isRejected ? "bg-red-500" : "bg-green-500"
+          } py-2 w-full text-white rounded-md`}
           onClick={() => {
             rejectNFT(nft.id);
             setIsRejected(!isRejected);
@@ -91,7 +93,9 @@ export const NFT = (nft) => {
                 ♦️ {nft.rarity_score.toFixed(2)}
               </div>
               <button
-                className="text-lg bg-red-500 hover:bg-red-400 py-4 mt-4 w-full text-white rounded-md"
+                className={`text-lg ${
+                  isRejected ? "bg-red-500" : "bg-green-500"
+                } py-4 mt-4 w-full text-white rounded-md`}
                 onClick={() => {
                   rejectNFT(nft.id);
                   setIsRejected(!isRejected);
