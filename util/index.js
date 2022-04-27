@@ -70,12 +70,12 @@ export const downloadNFTJSON = async (nfts, cb) => {
   const zip = new JSZip();
   const imageszip = zip.folder("images");
   const imagesJSON = zip.folder("json");
-  const promises = unrejectedNFTs.map(async (nft, id) => {
+  const promises = unrejectedNFTs.map(async (nft) => {
     const url = new URL(`${basePath}/${nft.image}`);
     const img = await fetch(url);
     const blob = await img.blob();
-    imageszip.file(`${id}.png`, blob, { base64: true });
-    imagesJSON.file(`${id}.json`, JSON.stringify(nft, null, 2));
+    imageszip.file(`${nft.id}.png`, blob, { base64: true });
+    imagesJSON.file(`${nft.id}.json`, JSON.stringify(nft, null, 2));
   });
   Promise.all(promises).then(() => {
     cb(false);

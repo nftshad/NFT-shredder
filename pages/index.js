@@ -20,8 +20,7 @@ function Home({ title, img, description, nfts, pages, filters }) {
   const [showMenu, setShowMenu] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const { all_traits, attr_count } = filters;
-  const { nfts: nftJSON } = useAppContext();
-
+  const { state: nftJSON, dispatch } = useAppContext();
   return (
     <div
       className="flex flex-col items-center justify-center 

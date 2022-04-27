@@ -25,14 +25,10 @@ const Trait = (attribute) => {
 };
 
 export const NFT = (nft) => {
-  const { nfts, rejectNFT } = useAppContext();
+  const { state: nfts, dispatch } = useAppContext();
   const [showModal, setShowModal] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
   const img_url = formatIpfsUrl(nft.image);
-
-  useEffect(() => {
-    setIsRejected(nfts[nft.id]?.isRejected);
-  }, []);
 
   return (
     <>
@@ -58,14 +54,14 @@ export const NFT = (nft) => {
 
         <button
           className={`text-sm  ${
-            isRejected ? "bg-red-500" : "bg-green-500"
+            nfts && nfts[nft.id]?.isRejected ? "bg-red-500" : "bg-green-500"
           } py-2 w-full text-white rounded-md`}
           onClick={() => {
-            rejectNFT(nft.id);
+            dispatch({ type: "REJECT_NFT", id: nft.id });
             setIsRejected(!isRejected);
           }}
         >
-          {isRejected ? "Rejected" : "Reject"}
+          {nfts ? (nfts[nft.id]?.isRejected ? "Rejected" : "Reject") : ""}
         </button>
       </div>
       {showModal && (
@@ -94,14 +90,16 @@ export const NFT = (nft) => {
               </div>
               <button
                 className={`text-lg ${
-                  isRejected ? "bg-red-500" : "bg-green-500"
+                  nfts && nfts[nft.id]?.isRejected
+                    ? "bg-red-500"
+                    : "bg-green-500"
                 } py-4 mt-4 w-full text-white rounded-md`}
                 onClick={() => {
-                  rejectNFT(nft.id);
+                  dispatch({ type: "REJECT_NFT", id: nft.id });
                   setIsRejected(!isRejected);
                 }}
               >
-                {isRejected ? "Rejected" : "Reject"}
+                {nfts && nfts[nft.id]?.isRejected ? "Rejected" : "Reject"}
               </button>
             </div>
             {/* left */}
