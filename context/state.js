@@ -7,8 +7,13 @@ const initalState = nfts;
 
 nfts.map((nft) => (nft["isRejected"] = false));
 
+const findIndex = (id, state) => {
+  return state.findIndex((node) => node.id == id);
+};
+
 const rejectNFT = (id, state) => {
-  state[id]["isRejected"] = !state[id]["isRejected"];
+  let index = findIndex(id, state);
+  state[index]["isRejected"] = !state[index]["isRejected"];
   window.localStorage.setItem("nfts", JSON.stringify(state));
   return state;
 };

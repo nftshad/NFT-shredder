@@ -4,6 +4,10 @@ import { config } from "../config";
 import { useAppContext } from "../context/state";
 import { FiX } from "react-icons/fi";
 
+const findIndex = (id, state) => {
+  return state.findIndex((node) => node.id == id);
+};
+
 const Trait = (attribute) => {
   return (
     <div className="flex flex-col justify-start w-full mb-4 p-2">
@@ -51,17 +55,23 @@ export const NFT = (nft) => {
             </h3>
           </a>
         </div>
-
+        {/* since this is a local array we need to find index */}
         <button
           className={`text-sm  ${
-            nfts && nfts[nft.id]?.isRejected ? "bg-red-500" : "bg-green-500"
+            nfts && nfts[findIndex(nft.id, nfts)].isRejected
+              ? "bg-red-500"
+              : "bg-green-500"
           } py-2 w-full text-white rounded-md`}
           onClick={() => {
             dispatch({ type: "REJECT_NFT", id: nft.id });
             setIsRejected(!isRejected);
           }}
         >
-          {nfts ? (nfts[nft.id]?.isRejected ? "Rejected" : "Reject") : ""}
+          {nfts
+            ? nfts && nfts[findIndex(nft.id, nfts)].isRejected
+              ? "Rejected"
+              : "Reject"
+            : ""}
         </button>
       </div>
       {showModal && (
@@ -90,7 +100,7 @@ export const NFT = (nft) => {
               </div>
               <button
                 className={`text-lg ${
-                  nfts && nfts[nft.id]?.isRejected
+                  nfts && nfts[findIndex(nft.id, nfts)].isRejected
                     ? "bg-red-500"
                     : "bg-green-500"
                 } py-4 mt-4 w-full text-white rounded-md`}
@@ -99,7 +109,9 @@ export const NFT = (nft) => {
                   setIsRejected(!isRejected);
                 }}
               >
-                {nfts && nfts[nft.id]?.isRejected ? "Rejected" : "Reject"}
+                {nfts && nfts[findIndex(nft.id, nfts)].isRejected
+                  ? "Rejected"
+                  : "Reject"}
               </button>
             </div>
             {/* left */}
