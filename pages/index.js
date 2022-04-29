@@ -1,7 +1,6 @@
 import Head from "next/head";
 import React, { createRef, useState } from "react";
 import { NextSeo } from "next-seo";
-import { useRouter } from "next/router";
 import { NFT } from "../components/NFT";
 import { SideBar } from "../components/SideBar";
 import { PageNumbers } from "../components/PageNumbers";
@@ -14,13 +13,14 @@ import { useAppContext } from "../context/state";
 import { downloadNFTJSON } from "../util";
 import { FiDownload } from "react-icons/fi";
 
-function Home({ title, img, description, nfts, pages, filters }) {
-  const router = useRouter();
+function Home({ title, img, description, nfts, pages, filters, query }) {
   const ref = createRef(null);
   const [showMenu, setShowMenu] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const { all_traits, attr_count } = filters;
-  const { state: nftJSON, dispatch } = useAppContext();
+  const { state, dispatch } = useAppContext();
+  const { nfts: nftJSON } = state;
+
   return (
     <div
       className="flex flex-col items-center justify-center 
@@ -63,6 +63,11 @@ function Home({ title, img, description, nfts, pages, filters }) {
         <div className="flex flex-col w-full w-5xl px-4">
           {showMenu}
           <div className="max-w-5xl flex justify-end mt-4">
+            <span className="text-sm justify-center items-center flex mr-4 text-gray-400">
+              Rejected:{" "}
+              {nftJSON && nftJSON.filter((nft) => nft.isRejected).length}/
+              {nftJSON.length}
+            </span>
             <button
               className="flex justify-center items-center text-sm text-white bg-blue-400 hover:bg-blue-500 p-4 rounded-md shadow-xl hover:shadow-none"
               onClick={() => {
@@ -75,12 +80,29 @@ function Home({ title, img, description, nfts, pages, filters }) {
             </button>
           </div>
           <TraitFilters />
+
           <div className="flex flex-wrap justify-between sm:justify-start max-w-5xl w-full">
-            {nfts.map(
-              (nft, idx) => nft && <NFT {...nft} index={idx} key={idx} />
-            )}
+            {query.sort_by == "rejected" &&
+              nftJSON
+                .filter((nft) => nft.isRejected)
+                .map(
+                  (nft, idx) => nft && <NFT {...nft} index={idx} key={idx} />
+                )}
+
+            {query.sort_by == "accepted" &&
+              nftJSON
+                .filter((nft) => !nft.isRejected)
+                .map(
+                  (nft, idx) => nft && <NFT {...nft} index={idx} key={idx} />
+                )}
+
+            {query.sort_by !== "rejected" &&
+              query.sort_by !== "accepted" &&
+              nfts.map(
+                (nft, idx) => nft && <NFT {...nft} index={idx} key={idx} />
+              )}
           </div>
-          <PageNumbers pages={pages} />
+          {query?.sort_by != "rejected" && <PageNumbers pages={pages} />}
         </div>
       </main>
       <Footer />
@@ -90,6 +112,7 @@ function Home({ title, img, description, nfts, pages, filters }) {
 
 Home.getInitialProps = async ({ query }) => {
   let { nfts = [], pages } = await getNFTs(query);
+  console.log(query);
   let filters = await getFilters(query);
   return {
     title: config.COLLECTION_TITLE,
@@ -98,6 +121,7 @@ Home.getInitialProps = async ({ query }) => {
     nfts,
     pages,
     filters,
+    query,
   };
 };
 

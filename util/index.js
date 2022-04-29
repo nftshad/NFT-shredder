@@ -66,16 +66,16 @@ export const formatPrice = (price) => {
 // for download button on index.js
 export const downloadNFTJSON = async (nfts, cb) => {
   const unrejectedNFTs = nfts.filter((nft) => nft.isRejected === false);
-
   const zip = new JSZip();
   const imageszip = zip.folder("images");
   const imagesJSON = zip.folder("json");
-  const promises = unrejectedNFTs.map(async (nft) => {
+  const promises = unrejectedNFTs.map(async (nft, index) => {
     const url = new URL(`${basePath}/${nft.image}`);
     const img = await fetch(url);
     const blob = await img.blob();
-    imageszip.file(`${nft.id}.png`, blob, { base64: true });
-    imagesJSON.file(`${nft.id}.json`, JSON.stringify(nft, null, 2));
+    nft.id = index;
+    imageszip.file(`${index}.png`, blob, { base64: true });
+    imagesJSON.file(`${index}.json`, JSON.stringify(nft, null, 2));
   });
   Promise.all(promises).then(() => {
     cb(false);

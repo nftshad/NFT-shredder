@@ -2,10 +2,15 @@ import React from "react";
 import { useRouter } from "next/router";
 import { ImSortNumbericDesc, ImSortNumericAsc } from "react-icons/im";
 import { json2query } from "../util";
+import { useAppContext } from "../context/state";
+import { FiCheck, FiX } from "react-icons/fi";
 
 export const Tools = (props) => {
   const router = useRouter();
   const { sort_by = "rarity_score", order = "desc" } = router.query;
+  const { state, dispatch } = useAppContext();
+  const { nfts } = state;
+
   const handleChange = (option) => {
     props.setShowMenu(false);
     if (option.toLowerCase().includes("rarity")) {
@@ -52,6 +57,27 @@ export const Tools = (props) => {
           })}`
         );
       }
+    }
+
+    if (option.toLowerCase().includes("rejected")) {
+      router.push(
+        `?${json2query({
+          ...router.query,
+          sort_by: "rejected",
+          order: "asc",
+          page_id: 0,
+        })}`
+      );
+    }
+    if (option.toLowerCase().includes("accepted")) {
+      router.push(
+        `?${json2query({
+          ...router.query,
+          sort_by: "accepted",
+          order: "asc",
+          page_id: 0,
+        })}`
+      );
     }
   };
 
@@ -110,6 +136,32 @@ export const Tools = (props) => {
             <ImSortNumericAsc />
           </span>
           <span className="text-xs">&nbsp;&nbsp;Token ID</span>
+        </a>
+      )}
+      {!(sort_by == "rejected") && (
+        <a
+          className="hover:bg-gray-300 hover:text-gray-900 cursor-pointer text-gray-700 py-2 px-2 rounded-md w-full flex items-center"
+          onClick={() => {
+            handleChange("rejected");
+          }}
+        >
+          <span className="text-xs">
+            <FiX />
+          </span>
+          <span className="text-xs">&nbsp;&nbsp;Rejected</span>
+        </a>
+      )}
+      {!(sort_by == "accepted") && (
+        <a
+          className="hover:bg-gray-300 hover:text-gray-900 cursor-pointer text-gray-700 py-2 px-2 rounded-md w-full flex items-center"
+          onClick={() => {
+            handleChange("accepted");
+          }}
+        >
+          <span className="text-xs">
+            <FiCheck />
+          </span>
+          <span className="text-xs">&nbsp;&nbsp;Accepted</span>
         </a>
       )}
     </div>

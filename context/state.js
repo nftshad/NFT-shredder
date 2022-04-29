@@ -3,27 +3,29 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 
 const AppContext = createContext();
 const nfts = require("../data/collection.json");
-const initalState = nfts;
+const initalState = {
+  nfts,
+};
 
 nfts.map((nft) => (nft["isRejected"] = false));
 
-const findIndex = (id, state) => {
-  return state.findIndex((node) => node.id == id);
+const findIndex = (id, nfts) => {
+  return nfts.findIndex((node) => node.id == id);
 };
 
-const rejectNFT = (id, state) => {
-  let index = findIndex(id, state);
-  state[index]["isRejected"] = !state[index]["isRejected"];
-  window.localStorage.setItem("nfts", JSON.stringify(state));
-  return state;
+const rejectNFT = (id, nfts) => {
+  let index = findIndex(id, nfts);
+  nfts[index]["isRejected"] = !nfts[index]["isRejected"];
+  window.localStorage.setItem("nfts", JSON.stringify(nfts));
+  return nfts;
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "REJECT_NFT":
-      return rejectNFT(action.id, state);
+      return { ...state, nfts: rejectNFT(action.id, nfts) };
     case "INIT":
-      return action.value;
+      return { ...state, nfts: action.value };
   }
 }
 

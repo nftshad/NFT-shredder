@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { formatIpfsUrl, formatPrice, ipfs2http } from "../util";
+import React, { useState } from "react";
+import { formatIpfsUrl } from "../util";
 import { config } from "../config";
 import { useAppContext } from "../context/state";
 import { FiX } from "react-icons/fi";
 
-const findIndex = (id, state) => {
-  return state.findIndex((node) => node.id == id);
+const findIndex = (id, nfts) => {
+  return nfts.findIndex((node) => node.id == id);
 };
 
 const Trait = (attribute) => {
@@ -29,7 +29,8 @@ const Trait = (attribute) => {
 };
 
 export const NFT = (nft) => {
-  const { state: nfts, dispatch } = useAppContext();
+  const { state, dispatch } = useAppContext();
+  const { nfts } = state;
   const [showModal, setShowModal] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
   const img_url = formatIpfsUrl(nft.image);
@@ -68,7 +69,7 @@ export const NFT = (nft) => {
           }}
         >
           {nfts
-            ? nfts && nfts[findIndex(nft.id, nfts)].isRejected
+            ? nfts[findIndex(nft.id, nfts)].isRejected
               ? "Rejected"
               : "Reject"
             : ""}
