@@ -102,7 +102,9 @@ function Home({ title, img, description, nfts, pages, filters, query }) {
                 (nft, idx) => nft && <NFT {...nft} index={idx} key={idx} />
               )}
           </div>
-          {query?.sort_by != "rejected" && <PageNumbers pages={pages} />}
+          {query.sort_by !== "rejected" && query.sort_by !== "accepted" && (
+            <PageNumbers pages={pages} />
+          )}
         </div>
       </main>
       <Footer />
