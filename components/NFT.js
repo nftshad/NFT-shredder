@@ -42,7 +42,7 @@ export const NFT = (nft) => {
         cursor-pointer rounded-md shadow-xs
         mr-3 mb-3 sm:mr-4 text-center"
       >
-        <div onClick={() => setShowModal(true)}>
+        <div onClick={() => nft.rarity_score && setShowModal(true)}>
           <img
             src={formatIpfsUrl(nft.image)}
             className="rounded-md h-auto bg-black"
