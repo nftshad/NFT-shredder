@@ -74,6 +74,8 @@ export const downloadNFTJSON = async (nfts, cb) => {
     const img = await fetch(url);
     const blob = await img.blob();
     nft.id = index;
+    nft.name = `Series 2 #${nft.id}`;
+    nft.image = `/images/${nft.id}.png`;
     imageszip.file(`${index}.png`, blob, { base64: true });
     imagesJSON.file(`${index}.json`, JSON.stringify(nft, null, 2));
   });
