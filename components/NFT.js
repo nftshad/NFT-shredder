@@ -38,9 +38,9 @@ export const NFT = (nft) => {
   return (
     <>
       <div
-        className="text-left w-24
-        cursor-pointer rounded-md shadow-xs
-        mr-3 mb-3 sm:mr-4 text-center"
+        className="w-52
+        cursor-pointer shadow-xs
+        mr-3 mb-3 sm:mr-4 text-center border-1 border-slate-800"
       >
         <div onClick={() => nft.rarity_score && setShowModal(true)}>
           <img
@@ -62,7 +62,7 @@ export const NFT = (nft) => {
             nfts && nfts[findIndex(nft.id, nfts)].isRejected
               ? "bg-red-500"
               : "bg-green-500"
-          } py-2 w-full text-white rounded-md`}
+          } py-2 w-full text-white `}
           onClick={() => {
             dispatch({ type: "REJECT_NFT", id: nft.id });
             setIsRejected(!isRejected);
@@ -70,8 +70,8 @@ export const NFT = (nft) => {
         >
           {nfts
             ? nfts[findIndex(nft.id, nfts)].isRejected
-              ? "Rejected"
-              : "Reject"
+              ? "LFG!"
+              : "Sucks"
             : ""}
         </button>
       </div>
