@@ -71,7 +71,7 @@ export const NFT = (nft) => {
           {nfts
             ? nfts[findIndex(nft.id, nfts)].isRejected
               ? "LFG!"
-              : "Sucks"
+              : "Nah"
             : ""}
         </button>
       </div>
