@@ -60,16 +60,16 @@ function Home({ title, img, description, nfts, pages, filters, query }) {
           showMenu={showMenu}
           setShowMenu={setShowMenu}
         />
-        <div className="flex flex-col w-full w-5xl px-4">
+        <div className="flex flex-col w-full w-5xl px-10">
           {showMenu}
-          <div className="max-w-5xl flex justify-end mt-4">
+          <div className="max-w8xl flex justify-end mt-6 mr-4">
             <span className="text-sm justify-center items-center flex mr-4 text-gray-400">
               Rejected:{" "}
               {nftJSON && nftJSON.filter((nft) => nft.isRejected).length}/
               {nftJSON.length}
             </span>
             <button
-              className="flex justify-center items-center text-sm text-white bg-blue-400 hover:bg-blue-500 p-4 rounded-md shadow-xl hover:shadow-none"
+              className="flex justify-center items-center text-sm text-white bg-blue-400 hover:bg-blue-500 p-4 rounded-md"
               onClick={() => {
                 setIsDownloading(true);
                 downloadNFTJSON(nftJSON, setIsDownloading);
@@ -81,7 +81,7 @@ function Home({ title, img, description, nfts, pages, filters, query }) {
           </div>
           <TraitFilters />
 
-          <div className="flex flex-wrap justify-between sm:justify-start max-w-5xl w-full">
+          <div className="flex flex-wrap justify-between sm:justify-start max-w-9xl w-full">
             {query.sort_by == "rejected" &&
               nftJSON
                 .filter((nft) => nft.isRejected)
